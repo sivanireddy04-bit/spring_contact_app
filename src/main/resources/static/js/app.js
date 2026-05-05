@@ -1,0 +1,4 @@
+const list=document.getElementById('contactList');const form=document.getElementById('contactForm');
+async function load(){const r=await fetch('/api/contacts');const data=await r.json();list.innerHTML='';data.forEach(c=>{const li=document.createElement('li');li.innerHTML=`<span>${c.name} - ${c.email} - ${c.phone}</span><button class="delete-btn" onclick="removeContact(${c.id})">Delete</button>`;list.appendChild(li);});}
+form.addEventListener('submit',async e=>{e.preventDefault();const body={name:name.value,email:email.value,phone:phone.value};await fetch('/api/contacts',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});form.reset();load();});
+async function removeContact(id){await fetch(`/api/contacts/${id}`,{method:'DELETE'});load();} load();
